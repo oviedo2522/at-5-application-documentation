@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
+  let [counter, changeCounter] = useState(1);
+  window.changeCounter = changeCounter;
+
+  const handleIncrement = () => {
+    changeCounter(counter + 1);
+  };
+
+  const handleDecrement = () => {
+    changeCounter(counter - 1);
+  };
+
+  useEffect(() => {
+    document.title = "Counter App";
+
+    return () => {
+      document.title = "Counter App";
+    };
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="counter-container">
+        <h1 className="header">The Current Number is</h1>
+        <h2 className="header">{counter}</h2>
+
+        <button className="button-increment" onClick={handleIncrement}>
+          +1
+        </button>
+        <button
+          className="button-decrement"
+          onClick={handleDecrement}
+          disabled={counter <= 0}
         >
-          Learn React
-        </a>
-      </header>
+          -1
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 }
